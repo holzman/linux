@@ -1700,8 +1700,10 @@ static enum oom_status mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int 
 		return OOM_ASYNC;
 	}
 
-	if (mem_cgroup_out_of_memory(memcg, mask, order))
+	if (mem_cgroup_out_of_memory(memcg, mask, order)) {
+		mem_cgroup_oom_notify(memcg);
 		return OOM_SUCCESS;
+	}
 
 	return OOM_FAILED;
 }
